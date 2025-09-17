@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Proverbs Reader</title>
+    <title>Proverbs Reader</title>
     <style>
         * {
             margin: 0;
@@ -12,207 +12,133 @@
         }
 
         body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            color: #1a1a1a;
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow: hidden;
+            padding: 2rem;
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
             text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .header h1 {
-            font-size: 2.2em;
-            margin-bottom: 10px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
         }
 
         .header p {
-            opacity: 0.9;
-            font-style: italic;
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 400;
         }
 
-        .main-content {
-            padding: 30px;
-        }
-
-        .current-verse {
-            background: #f8f9ff;
-            border-left: 5px solid #667eea;
-            padding: 25px;
-            margin-bottom: 30px;
-            border-radius: 0 10px 10px 0;
-            min-height: 120px;
-        }
-
-        .verse-reference {
-            font-weight: bold;
-            color: #667eea;
-            font-size: 1.2em;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .completed-badge {
-            background: #28a745;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 15px;
-            font-size: 0.8em;
-            font-weight: normal;
-        }
-
-        .current-position-badge {
-            background: #ffc107;
-            color: #212529;
-            padding: 4px 8px;
-            border-radius: 15px;
-            font-size: 0.8em;
-            font-weight: normal;
-        }
-
-        .verse-text {
-            font-size: 1.1em;
-            line-height: 1.6;
-            color: #333;
-            font-style: italic;
-        }
-
-        .loading {
-            opacity: 0.6;
-            font-style: normal;
-        }
-
-        .translation-selector {
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .translation-selector label {
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .translation-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .translation-btn {
-            padding: 8px 16px;
-            border: 2px solid #667eea;
-            border-radius: 6px;
-            background: white;
-            color: #667eea;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9em;
-            font-weight: 500;
-        }
-
-        .translation-btn.active {
-            background: #667eea;
-            color: white;
-        }
-
-        .translation-btn:hover {
-            background: #5a67d8;
-            color: white;
-        }
-
-        .reading-position {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .reading-position h4 {
-            color: #856404;
-            margin-bottom: 10px;
-            font-size: 1em;
-        }
-
-        .position-controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .reflection-section {
-            margin: 30px 0;
-        }
-
-        .reflection-section h3 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.1em;
-        }
-
-        .reflection-textarea {
-            width: 100%;
-            min-height: 120px;
-            padding: 15px;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            font-family: inherit;
-            font-size: 1em;
-            resize: vertical;
-            transition: border-color 0.3s ease;
-        }
-
-        .reflection-textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .controls {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            flex-wrap: wrap;
+        .main-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .controls-section {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
 
-        .controls-divider {
-            width: 2px;
-            background: #e9ecef;
-            margin: 0 5px;
+        .control-group {
+            background: #f8f9ff;
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid #e5e7eb;
+        }
+
+        .control-group h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 1rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
         }
 
         .btn {
-            padding: 12px 24px;
+            padding: 0.75rem 1.5rem;
             border: none;
-            border-radius: 8px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            border-radius: 12px;
+            font-size: 0.875rem;
             font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #fff;
+            color: #374151;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        .btn.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        .btn.success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        .btn.warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        .btn.danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            border-color: transparent;
         }
 
         .btn:disabled {
@@ -221,171 +147,321 @@
             transform: none !important;
         }
 
-        .btn-primary {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            background: #5a67d8;
-            transform: translateY(-2px);
-        }
-
-        .btn-success {
-            background: #28a745;
-            color: white;
-        }
-
-        .btn-success:hover:not(:disabled) {
-            background: #218838;
-            transform: translateY(-2px);
-        }
-
-        .btn-warning {
-            background: #ffc107;
-            color: #212529;
-        }
-
-        .btn-warning:hover:not(:disabled) {
-            background: #e0a800;
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-
-        .btn-secondary:hover:not(:disabled) {
-            background: #5a6268;
-            transform: translateY(-2px);
-        }
-
-        .btn-sm {
-            padding: 6px 12px;
-            font-size: 0.9em;
-        }
-
-        .progress-bar {
-            background: #e9ecef;
-            border-radius: 10px;
-            height: 8px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            height: 100%;
-            border-radius: 10px;
-            transition: width 0.5s ease;
-        }
-
-        .stats {
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
 
         .stat-card {
-            background: #f8f9ff;
-            padding: 20px;
-            border-radius: 10px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e5e7eb 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
             text-align: center;
-            border: 1px solid #e9ecef;
+            border: 1px solid #e5e7eb;
         }
 
         .stat-number {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #667eea;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
         }
 
         .stat-label {
-            color: #666;
-            margin-top: 5px;
-            font-size: 0.9em;
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-weight: 500;
         }
 
-        .navigation {
+        .progress-container {
+            background: #f3f4f6;
+            border-radius: 50px;
+            height: 12px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            border-radius: 50px;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .reading-section {
+            background: #f8f9ff;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .section-header {
             display: flex;
-            gap: 10px;
-            margin: 20px 0;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #374151;
+        }
+
+        .badges {
+            display: flex;
+            gap: 0.5rem;
             flex-wrap: wrap;
         }
 
-        .verse-select {
-            padding: 8px 12px;
-            border: 2px solid #e9ecef;
-            border-radius: 6px;
-            font-size: 1em;
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
         }
 
-        .verse-select:focus {
+        .badge.completed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge.current {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge.sectional {
+            background: #ddd6fe;
+            color: #5b21b6;
+        }
+
+        .verse-content {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: #374151;
+            margin-bottom: 1rem;
+        }
+
+        .section-info {
+            background: #e0e7ff;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: #4338ca;
+        }
+
+        .copyright {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .reflection-area {
+            background: #f9fafb;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .reflection-area h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 1rem;
+        }
+
+        .reflection-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            transition: border-color 0.2s ease;
+            background: white;
+        }
+
+        .reflection-textarea:focus {
             outline: none;
             border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .navigation-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .select-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .select-group label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .select-input {
+            padding: 0.75rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: white;
+            transition: border-color 0.2s ease;
+        }
+
+        .select-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .message {
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
             display: none;
+            font-weight: 500;
         }
 
         .message.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
         }
 
         .message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
         }
 
         .message.show {
             display: block;
+            animation: slideIn 0.3s ease;
         }
 
-        .copyright-notice {
-            font-size: 0.8em;
-            color: #666;
-            margin-top: 10px;
-            font-style: normal;
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-            
-            .header {
-                padding: 20px;
-            }
-            
-            .main-content {
-                padding: 20px;
-            }
-            
-            .controls {
-                justify-content: center;
-            }
-            
-            .btn {
-                flex: 1;
-                min-width: 120px;
-            }
+        .loading {
+            opacity: 0.6;
+        }
 
+        .mode-toggle {
+            display: flex;
+            background: #f3f4f6;
+            border-radius: 12px;
+            padding: 0.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: transparent;
+            color: #6b7280;
+        }
+
+        .mode-btn.active {
+            background: white;
+            color: #374151;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        
+        .collapsible-section {
+            margin-bottom: 1rem;
+        }
+
+        .collapsible-header {
+            width: 100%;
+            text-align: left;
+            background: #f3f4f6;
+            border: none;
+            padding: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collapsible-header:hover {
+            background: #e5e7eb;
+        }
+
+        .chevron {
+            transition: transform 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
             .controls-section {
-                width: 100%;
-                justify-content: center;
+                grid-template-columns: 1fr;
             }
-
-            .controls-divider {
-                display: none;
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .button-group {
+                justify-content: center;
             }
         }
     </style>
@@ -393,91 +469,137 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📖 Daily Proverbs Reader</h1>
-            <p>Wisdom for daily reflection and growth</p>
+            <h1>Proverbs Reader</h1>
+            <p>Wisdom literature for daily study and reflection</p>
         </div>
 
-        <div class="main-content">
-            <div class="translation-selector">
-                <label>Bible Translation:</label>
-                <div class="translation-buttons">
-                    <button class="translation-btn active" onclick="setTranslation('ESV')">ESV</button>
-                    <button class="translation-btn" onclick="setTranslation('NASB')">NASB</button>
+        <div class="main-card">
+            <!-- Quick Actions - Most important buttons first -->
+            <div class="quick-actions">
+                <div class="button-group">
+                    <button class="btn primary" onclick="loadNextFromPosition()">Continue Reading</button>
+                    <button class="btn success" onclick="markCompleted()">Mark Complete</button>
                 </div>
             </div>
 
-            <div class="reading-position">
-                <h4>📍 Current Reading Position</h4>
-                <div class="position-controls">
-                    <span>You are currently reading: <strong id="currentPosition">Proverbs 1:1</strong></span>
-                    <button class="btn btn-warning btn-sm" onclick="setCurrentPosition()">Set Current Position</button>
-                    <button class="btn btn-secondary btn-sm" onclick="markChapterCompleted()">Mark Chapter Complete</button>
+            <!-- Message -->
+            <div class="message" id="message"></div>
+
+            <!-- Reading Section - Priority content first -->
+            <div class="reading-section">
+                <div class="section-header">
+                    <div class="section-title" id="sectionTitle">Proverbs 1:1</div>
+                    <div class="badges" id="badges"></div>
                 </div>
+                <div class="section-info" id="sectionInfo" style="display: none;"></div>
+                <div class="verse-content" id="verseContent">
+                    Click "Continue Reading" to begin your daily study...
+                </div>
+                <div class="copyright" id="copyright"></div>
             </div>
 
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-number" id="completedCount">0</div>
-                    <div class="stat-label">Completed Verses</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="completedChapters">0</div>
-                    <div class="stat-label">Completed Chapters</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="totalCount">915</div>
-                    <div class="stat-label">Total Verses</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="progressPercent">0%</div>
-                    <div class="stat-label">Progress</div>
-                </div>
-            </div>
-
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-            </div>
-
-            <div class="current-verse">
-                <div class="verse-reference" id="verseReference">
-                    Proverbs 1:1
-                </div>
-                <div class="verse-text" id="verseText">
-                    Click "Load Next Verse" to begin your daily reading...
-                </div>
-            </div>
-
-            <div class="navigation">
-                <select class="verse-select" id="chapterSelect">
-                    <!-- Will be populated by JavaScript -->
-                </select>
-                <select class="verse-select" id="verseSelect">
-                    <!-- Will be populated by JavaScript -->
-                </select>
-                <button class="btn btn-secondary" onclick="goToSelectedVerse()">Go to Verse</button>
-            </div>
-
-            <div class="reflection-section">
-                <h3>📝 My Reflections & Learning</h3>
+            <!-- Reflection -->
+            <div class="reflection-area">
+                <h3>Reflections & Learning</h3>
                 <textarea 
                     class="reflection-textarea" 
                     id="reflectionText" 
-                    placeholder="What did you learn from this verse? How can you apply it to your life today?"
+                    placeholder="What insights do you gain from this passage? How might you apply this wisdom in your life?"
                 ></textarea>
             </div>
 
-            <div class="message" id="message"></div>
-
-            <div class="controls">
-                <div class="controls-section">
-                    <button class="btn btn-primary" onclick="loadNextFromPosition()">📖 Continue Reading</button>
-                    <button class="btn btn-primary" onclick="loadNextUnread()">🔍 Find Next Unread</button>
+            <!-- All Actions -->
+            <div class="all-actions">
+                <div class="button-group">
+                    <button class="btn primary" onclick="loadNextUnread()">Find Next Unread</button>
+                    <button class="btn danger" onclick="markUncompleted()">Mark Uncompleted</button>
+                    <button class="btn" onclick="previousVerse()">Previous</button>
+                    <button class="btn" onclick="nextVerse()">Next</button>
                 </div>
-                <div class="controls-divider"></div>
-                <div class="controls-section">
-                    <button class="btn btn-success" onclick="markCompleted()">✅ Mark Complete</button>
-                    <button class="btn btn-secondary" onclick="previousVerse()">← Previous</button>
-                    <button class="btn btn-secondary" onclick="nextVerse()">Next →</button>
+            </div>
+
+            <!-- Collapsible Settings -->
+            <div class="collapsible-section">
+                <button class="collapsible-header" onclick="toggleCollapsible('settings')">
+                    <span>Settings & Navigation</span>
+                    <span class="chevron" id="settings-chevron">▼</span>
+                </button>
+                <div class="collapsible-content" id="settings-content" style="display: none;">
+                    <!-- Mode Toggle -->
+                    <div class="mode-toggle">
+                        <button class="mode-btn active" onclick="setReadingMode('verse')">Single Verses</button>
+                        <button class="mode-btn" onclick="setReadingMode('section')">Literary Sections</button>
+                    </div>
+
+                    <!-- Controls Section -->
+                    <div class="controls-section">
+                        <div class="control-group">
+                            <h3>Translation</h3>
+                            <div class="button-group">
+                                <button class="btn active" onclick="setTranslation('ESV')">ESV</button>
+                                <button class="btn" onclick="setTranslation('NASB')">NASB</button>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <h3>Reading Position</h3>
+                            <p>Currently reading: <strong id="currentPosition">Proverbs 1:1</strong></p>
+                            <div class="button-group">
+                                <button class="btn warning" onclick="setCurrentPosition()">Set Current Position</button>
+                                <button class="btn" onclick="markChapterCompleted()">Mark Chapter Complete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="navigation-section">
+                        <div class="select-group">
+                            <label>Chapter</label>
+                            <select class="select-input" id="chapterSelect"></select>
+                        </div>
+                        <div class="select-group">
+                            <label>Verse</label>
+                            <select class="select-input" id="verseSelect"></select>
+                        </div>
+                        <div class="select-group">
+                            <label>Actions</label>
+                            <button class="btn" onclick="goToSelectedVerse()">Go to Selection</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Collapsible Stats -->
+            <div class="collapsible-section">
+                <button class="collapsible-header" onclick="toggleCollapsible('stats')">
+                    <span>Progress & Statistics</span>
+                    <span class="chevron" id="stats-chevron">▼</span>
+                </button>
+                <div class="collapsible-content" id="stats-content" style="display: none;">
+                    <!-- Progress Bar -->
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" id="completedCount">0</div>
+                            <div class="stat-label">Completed Verses</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="completedChapters">0</div>
+                            <div class="stat-label">Completed Chapters</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="completedSections">0</div>
+                            <div class="stat-label">Completed Sections</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="progressPercent">0%</div>
+                            <div class="stat-label">Progress</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -490,19 +612,47 @@
         
         const SCRIPTURE_API_KEY = "e5ff65c6fd5e6c51e85d05d7da346738";
         const SCRIPTURE_API_URL = "https://api.scripture.api.bible/v1";
-        const NASB_BIBLE_ID = "de4e12af7f28f599-02"; // NASB Bible ID
+        const NASB_BIBLE_ID = "de4e12af7f28f599-02";
 
-        // Proverbs verse counts for each chapter
+        // Proverbs verse counts and sectional divisions
         const PROVERBS_CHAPTERS = {
             1: 33, 2: 22, 3: 35, 4: 27, 5: 23, 6: 35, 7: 27, 8: 36, 9: 18, 10: 32,
             11: 31, 12: 28, 13: 25, 14: 35, 15: 33, 16: 33, 17: 28, 18: 24, 19: 29, 20: 30,
             21: 31, 22: 29, 23: 35, 24: 34, 25: 28, 26: 28, 27: 27, 28: 28, 29: 27, 30: 33, 31: 31
         };
 
+        // Literary sections based on scholarly analysis
+        const PROVERBS_SECTIONS = {
+            // Collection I: Prologue - Extended teachings
+            "1:1-1:7": { title: "Title and Purpose", type: "introduction" },
+            "1:8-1:19": { title: "Lecture 1: Avoid Bad Company", type: "lecture" },
+            "1:20-1:33": { title: "Wisdom's First Call", type: "poem" },
+            "2:1-2:22": { title: "Lecture 2: Benefits of Wisdom", type: "lecture" },
+            "3:1-3:12": { title: "Lecture 3: Trust in the Lord", type: "lecture" },
+            "3:13-3:35": { title: "Lecture 4: Blessings of Wisdom", type: "lecture" },
+            "4:1-4:9": { title: "Lecture 5: Get Wisdom", type: "lecture" },
+            "4:10-4:19": { title: "Lecture 6: Two Ways", type: "lecture" },
+            "4:20-4:27": { title: "Lecture 7: Guard Your Heart", type: "lecture" },
+            "5:1-5:23": { title: "Lecture 8: Marriage vs Adultery", type: "lecture" },
+            "6:1-6:19": { title: "Three Follies to Avoid", type: "appendix" },
+            "6:20-6:35": { title: "Lecture 9: Cost of Adultery", type: "lecture" },
+            "7:1-7:27": { title: "Lecture 10: The Adulteress", type: "lecture" },
+            "8:1-8:36": { title: "Wisdom's Second Call", type: "poem" },
+            "9:1-9:18": { title: "Two Banquets", type: "epilogue" },
+            
+            // Chapters 10-31 mostly individual verses, but some grouped sections
+            "22:17-24:22": { title: "Thirty Sayings of the Wise", type: "collection" },
+            "24:23-24:34": { title: "Further Sayings of the Wise", type: "collection" },
+            "30:1-30:33": { title: "Words of Agur", type: "collection" },
+            "31:1-31:9": { title: "Words of Lemuel: The Noble King", type: "collection" },
+            "31:10-31:31": { title: "The Excellent Wife", type: "poem" }
+        };
+
         let currentChapter = 1;
         let currentVerse = 1;
         let currentTranslation = 'ESV';
-        let progress = JSON.parse(localStorage.getItem('proverbsProgress') || '{"completed": [], "reflections": {}, "currentPosition": {"chapter": 1, "verse": 1}, "completedChapters": []}');
+        let readingMode = 'verse'; // 'verse' or 'section'
+        let progress = JSON.parse(localStorage.getItem('proverbsProgress') || '{"completed": [], "completedSections": [], "reflections": {}, "currentPosition": {"chapter": 1, "verse": 1}, "completedChapters": []}');
         let isLoading = false;
 
         // Initialize current position from saved progress
@@ -511,13 +661,52 @@
             currentVerse = progress.currentPosition.verse;
         }
 
-        async function fetchVerseESV(chapter, verse) {
-            const verseRef = `Proverbs ${chapter}:${verse}`;
+        // Ensure completedSections exists in progress
+        if (!progress.completedSections) {
+            progress.completedSections = [];
+            saveProgress();
+        }
+
+        function setReadingMode(mode) {
+            readingMode = mode;
+            
+            // Update mode buttons
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            const modeButtons = document.querySelectorAll('[onclick*="setReadingMode"]');
+            modeButtons.forEach(btn => {
+                if (btn.onclick && btn.onclick.toString().includes(`'${mode}'`)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            loadCurrentContent();
+            updateStats();
+        }
+
+        function getCurrentSectionKey() {
+            // Find which section the current verse belongs to
+            const verseKey = `${currentChapter}:${currentVerse}`;
+            
+            for (const [sectionKey, sectionInfo] of Object.entries(PROVERBS_SECTIONS)) {
+                const [startRef, endRef] = sectionKey.split('-');
+                const [startChapter, startVerse] = startRef.split(':').map(Number);
+                const [endChapter, endVerse] = endRef ? endRef.split(':').map(Number) : [startChapter, startVerse];
+                
+                if ((currentChapter > startChapter || (currentChapter === startChapter && currentVerse >= startVerse)) &&
+                    (currentChapter < endChapter || (currentChapter === endChapter && currentVerse <= endVerse))) {
+                    return sectionKey;
+                }
+            }
+            return null;
+        }
+
+        async function fetchVerseESV(chapter, verse, endVerse = null) {
+            const verseRef = endVerse ? `Proverbs ${chapter}:${verse}-${endVerse}` : `Proverbs ${chapter}:${verse}`;
             
             const params = new URLSearchParams({
                 'q': verseRef,
                 'include-passage-references': 'false',
-                'include-verse-numbers': 'false',
+                'include-verse-numbers': readingMode === 'section',
                 'include-first-verse-numbers': 'false',
                 'include-footnotes': 'false',
                 'include-footnote-body': 'false',
@@ -544,40 +733,63 @@
             }
         }
 
-        async function fetchVerseNASB(chapter, verse) {
-            // Convert chapter:verse to Scripture API format
-            const chapterStr = chapter.toString().padStart(2, '0');
-            const verseStr = verse.toString().padStart(2, '0');
-            const verseId = `PRO.${chapterStr}.${verseStr}`;
+        async function fetchVerseNASB(chapter, verse, endVerse = null) {
+            if (endVerse && endVerse !== verse) {
+                // For ranges, fetch each verse individually and combine
+                const verses = [];
+                for (let v = verse; v <= endVerse; v++) {
+                    const chapterStr = chapter.toString().padStart(2, '0');
+                    const verseStr = v.toString().padStart(2, '0');
+                    const verseId = `PRO.${chapterStr}.${verseStr}`;
 
-            const response = await fetch(`${SCRIPTURE_API_URL}/bibles/${NASB_BIBLE_ID}/verses/${verseId}?content-type=text&include-notes=false&include-titles=false&include-chapter-numbers=false&include-verse-numbers=false`, {
-                headers: {
-                    'api-key': SCRIPTURE_API_KEY
+                    const response = await fetch(`${SCRIPTURE_API_URL}/bibles/${NASB_BIBLE_ID}/verses/${verseId}?content-type=text&include-notes=false&include-titles=false&include-chapter-numbers=false&include-verse-numbers=${readingMode === 'section'}`, {
+                        headers: {
+                            'api-key': SCRIPTURE_API_KEY
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.data && data.data.content) {
+                            verses.push(readingMode === 'section' ? `${v} ${data.data.content.trim()}` : data.data.content.trim());
+                        }
+                    }
                 }
-            });
-
-            if (!response.ok) {
-                throw new Error(`Scripture API Error: ${response.status}`);
-            }
-
-            const data = await response.json();
-            
-            if (data.data && data.data.content) {
-                return data.data.content.trim();
+                return verses.join(' ');
             } else {
-                throw new Error('No content found in Scripture API response');
+                const chapterStr = chapter.toString().padStart(2, '0');
+                const verseStr = verse.toString().padStart(2, '0');
+                const verseId = `PRO.${chapterStr}.${verseStr}`;
+
+                const response = await fetch(`${SCRIPTURE_API_URL}/bibles/${NASB_BIBLE_ID}/verses/${verseId}?content-type=text&include-notes=false&include-titles=false&include-chapter-numbers=false&include-verse-numbers=false`, {
+                    headers: {
+                        'api-key': SCRIPTURE_API_KEY
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Scripture API Error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                if (data.data && data.data.content) {
+                    return data.data.content.trim();
+                } else {
+                    throw new Error('No content found in Scripture API response');
+                }
             }
         }
 
-        async function fetchVerse(chapter, verse) {
+        async function fetchContent(chapter, verse, endVerse = null) {
             try {
                 if (currentTranslation === 'ESV') {
-                    return await fetchVerseESV(chapter, verse);
+                    return await fetchVerseESV(chapter, verse, endVerse);
                 } else if (currentTranslation === 'NASB') {
-                    return await fetchVerseNASB(chapter, verse);
+                    return await fetchVerseNASB(chapter, verse, endVerse);
                 }
             } catch (error) {
-                console.error('Error fetching verse:', error);
+                console.error('Error fetching content:', error);
                 throw error;
             }
         }
@@ -585,23 +797,25 @@
         function setTranslation(translation) {
             currentTranslation = translation;
             
-            // Update button states
-            document.querySelectorAll('.translation-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelector(`[onclick="setTranslation('${translation}')"]`).classList.add('active');
+            // Find the parent control group and update buttons within it
+            const translationButtons = document.querySelectorAll('[onclick*="setTranslation"]');
+            translationButtons.forEach(btn => btn.classList.remove('active'));
             
-            // Reload current verse with new translation
-            loadCurrentVerse();
+            // Find the clicked button by checking onclick attribute
+            translationButtons.forEach(btn => {
+                if (btn.onclick && btn.onclick.toString().includes(`'${translation}'`)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            loadCurrentContent();
         }
 
         function init() {
             populateChapterSelect();
             updateCurrentPositionDisplay();
-            updateStats(); // Make sure stats are updated on initial load
-            
-            // Load the current position verse by default
-            loadCurrentVerse();
+            updateStats();
+            loadCurrentContent();
         }
 
         function populateChapterSelect() {
@@ -643,7 +857,7 @@
             currentChapter = parseInt(chapterSelect.value);
             currentVerse = parseInt(verseSelect.value);
             
-            loadCurrentVerse();
+            loadCurrentContent();
         }
 
         function setCurrentPosition() {
@@ -675,11 +889,20 @@
                 progress.completedChapters.push(chapter);
             }
             
+            // Mark any sections in this chapter as completed
+            for (const sectionKey of Object.keys(PROVERBS_SECTIONS)) {
+                const [startRef, endRef] = sectionKey.split('-');
+                const [startChapter] = startRef.split(':').map(Number);
+                if (startChapter === chapter && !progress.completedSections.includes(sectionKey)) {
+                    progress.completedSections.push(sectionKey);
+                }
+            }
+            
             saveProgress();
-            loadCurrentVerse();
+            loadCurrentContent();
             updateStats();
             
-            showMessage(`✅ Marked all verses in Proverbs ${chapter} as completed!`, 'success');
+            showMessage(`Marked all content in Proverbs ${chapter} as completed!`, 'success');
         }
 
         function getVerseKey(chapter, verse) {
@@ -690,16 +913,100 @@
             return Object.values(PROVERBS_CHAPTERS).reduce((sum, count) => sum + count, 0);
         }
 
+        function getTotalSections() {
+            return Object.keys(PROVERBS_SECTIONS).length;
+        }
+
         function setLoadingState(loading) {
             isLoading = loading;
             const buttons = document.querySelectorAll('.btn');
             buttons.forEach(btn => btn.disabled = loading);
             
             if (loading) {
-                document.getElementById('verseText').textContent = `Loading verse from ${currentTranslation}...`;
-                document.getElementById('verseText').classList.add('loading');
+                document.getElementById('verseContent').textContent = `Loading from ${currentTranslation}...`;
+                document.getElementById('verseContent').classList.add('loading');
             } else {
-                document.getElementById('verseText').classList.remove('loading');
+                document.getElementById('verseContent').classList.remove('loading');
+            }
+        }
+
+        async function loadCurrentContent() {
+            if (readingMode === 'section') {
+                await loadCurrentSection();
+            } else {
+                await loadCurrentVerse();
+            }
+        }
+
+        async function loadCurrentSection() {
+            const sectionKey = getCurrentSectionKey();
+            
+            if (!sectionKey) {
+                // Fallback to single verse if no section found
+                await loadCurrentVerse();
+                return;
+            }
+
+            const sectionInfo = PROVERBS_SECTIONS[sectionKey];
+            const [startRef, endRef] = sectionKey.split('-');
+            const [startChapter, startVerse] = startRef.split(':').map(Number);
+            const [endChapter, endVerse] = endRef ? endRef.split(':').map(Number) : [startChapter, startVerse];
+
+            const isCompleted = progress.completedSections.includes(sectionKey);
+            const isCurrentPosition = progress.currentPosition && 
+                progress.currentPosition.chapter === currentChapter && 
+                progress.currentPosition.verse === currentVerse;
+            
+            // Update title and badges
+            const sectionTitle = `${sectionInfo.title} (${startRef}${endRef ? `-${endRef}` : ''})`;
+            document.getElementById('sectionTitle').textContent = sectionTitle;
+            
+            let badges = '';
+            if (isCompleted) badges += '<span class="badge completed">Completed</span>';
+            if (isCurrentPosition) badges += '<span class="badge current">Current Position</span>';
+            badges += '<span class="badge sectional">Literary Section</span>';
+            document.getElementById('badges').innerHTML = badges;
+
+            // Show section info
+            const sectionInfoEl = document.getElementById('sectionInfo');
+            sectionInfoEl.style.display = 'block';
+            sectionInfoEl.innerHTML = `
+                <strong>Section Type:</strong> ${sectionInfo.type}<br>
+                <strong>Verses:</strong> ${startRef}${endRef ? ` through ${endRef}` : ''}<br>
+                <strong>Literary Unit:</strong> This passage should be read as a complete unit of thought.
+            `;
+            
+            // Load existing reflection
+            const reflection = progress.reflections[sectionKey] || '';
+            document.getElementById('reflectionText').value = reflection;
+            
+            // Update selects
+            document.getElementById('chapterSelect').value = currentChapter;
+            updateVerseSelect();
+            document.getElementById('verseSelect').value = currentVerse;
+            
+            // Fetch section text
+            setLoadingState(true);
+            
+            try {
+                const sectionText = await fetchContent(startChapter, startVerse, endChapter === startChapter ? endVerse : null);
+                const copyrightText = currentTranslation === 'ESV' ? 
+                    'Scripture quotations are from the ESV® Bible' :
+                    'Scripture taken from the NASB';
+                    
+                document.getElementById('verseContent').innerHTML = sectionText;
+                document.getElementById('copyright').textContent = copyrightText;
+            } catch (error) {
+                document.getElementById('verseContent').innerHTML = `
+                    <span style="color: #ef4444;">
+                        Error loading section: ${error.message}
+                        <br><br>
+                        Please check your internet connection and try again.
+                    </span>
+                `;
+                showMessage(`Error loading section from ${currentTranslation} API. Please try again.`, 'error');
+            } finally {
+                setLoadingState(false);
             }
         }
 
@@ -712,13 +1019,14 @@
                 progress.currentPosition.verse === currentVerse;
             
             let badges = '';
-            if (isCompleted) badges += '<span class="completed-badge">✅ Completed</span>';
-            if (isCurrentPosition) badges += '<span class="current-position-badge">📍 Current Position</span>';
+            if (isCompleted) badges += '<span class="badge completed">Completed</span>';
+            if (isCurrentPosition) badges += '<span class="badge current">Current Position</span>';
             
-            document.getElementById('verseReference').innerHTML = `
-                ${verseRef} (${currentTranslation})
-                ${badges}
-            `;
+            document.getElementById('sectionTitle').textContent = `${verseRef} (${currentTranslation})`;
+            document.getElementById('badges').innerHTML = badges;
+            
+            // Hide section info for single verses
+            document.getElementById('sectionInfo').style.display = 'none';
             
             // Load existing reflection
             const reflection = progress.reflections[verseKey] || '';
@@ -733,18 +1041,16 @@
             setLoadingState(true);
             
             try {
-                const verseText = await fetchVerse(currentChapter, currentVerse);
+                const verseText = await fetchContent(currentChapter, currentVerse);
                 const copyrightText = currentTranslation === 'ESV' ? 
                     'Scripture quotations are from the ESV® Bible' :
                     'Scripture taken from the NASB';
                     
-                document.getElementById('verseText').innerHTML = `
-                    ${verseText}
-                    <div class="copyright-notice">${copyrightText}</div>
-                `;
+                document.getElementById('verseContent').innerHTML = verseText;
+                document.getElementById('copyright').textContent = copyrightText;
             } catch (error) {
-                document.getElementById('verseText').innerHTML = `
-                    <span style="color: #dc3545;">
+                document.getElementById('verseContent').innerHTML = `
+                    <span style="color: #ef4444;">
                         Error loading verse: ${error.message}
                         <br><br>
                         Please check your internet connection and try again.
@@ -757,6 +1063,14 @@
         }
 
         function findNextUnread() {
+            if (readingMode === 'section') {
+                return findNextUnreadSection();
+            } else {
+                return findNextUnreadVerse();
+            }
+        }
+
+        function findNextUnreadVerse() {
             for (let chapter = 1; chapter <= 31; chapter++) {
                 const verseCount = PROVERBS_CHAPTERS[chapter];
                 for (let verse = 1; verse <= verseCount; verse++) {
@@ -766,7 +1080,19 @@
                     }
                 }
             }
-            return null; // All completed
+            return null;
+        }
+
+        function findNextUnreadSection() {
+            // Find next unread section
+            for (const sectionKey of Object.keys(PROVERBS_SECTIONS)) {
+                if (!progress.completedSections.includes(sectionKey)) {
+                    const [startRef] = sectionKey.split('-');
+                    const [chapter, verse] = startRef.split(':').map(Number);
+                    return { chapter, verse };
+                }
+            }
+            return null;
         }
 
         function findNextFromPosition() {
@@ -774,38 +1100,60 @@
             let chapter = pos.chapter;
             let verse = pos.verse;
             
-            // Check if current position is completed, if so find next in sequence
-            while (chapter <= 31) {
-                const verseKey = getVerseKey(chapter, verse);
-                if (!progress.completed.includes(verseKey)) {
-                    return { chapter, verse };
-                }
+            if (readingMode === 'section') {
+                // Find next unread section from current position
+                const currentSectionKey = getCurrentSectionKey();
+                let foundCurrent = !currentSectionKey;
                 
-                // Move to next verse
-                if (verse < PROVERBS_CHAPTERS[chapter]) {
-                    verse++;
-                } else if (chapter < 31) {
-                    chapter++;
-                    verse = 1;
-                } else {
-                    break; // End of Proverbs
+                for (const sectionKey of Object.keys(PROVERBS_SECTIONS)) {
+                    if (!foundCurrent && sectionKey === currentSectionKey) {
+                        foundCurrent = true;
+                        if (!progress.completedSections.includes(sectionKey)) {
+                            return { chapter, verse };
+                        }
+                        continue;
+                    }
+                    
+                    if (foundCurrent && !progress.completedSections.includes(sectionKey)) {
+                        const [startRef] = sectionKey.split('-');
+                        const [secChapter, secVerse] = startRef.split(':').map(Number);
+                        return { chapter: secChapter, verse: secVerse };
+                    }
                 }
+                return null;
+            } else {
+                // Check if current position is completed, if so find next in sequence
+                while (chapter <= 31) {
+                    const verseKey = getVerseKey(chapter, verse);
+                    if (!progress.completed.includes(verseKey)) {
+                        return { chapter, verse };
+                    }
+                    
+                    // Move to next verse
+                    if (verse < PROVERBS_CHAPTERS[chapter]) {
+                        verse++;
+                    } else if (chapter < 31) {
+                        chapter++;
+                        verse = 1;
+                    } else {
+                        break;
+                    }
+                }
+                return null;
             }
-            
-            return null; // All from position completed
         }
 
         async function loadNextFromPosition() {
             if (isLoading) return;
             
-            const nextVerse = findNextFromPosition();
-            if (nextVerse) {
-                currentChapter = nextVerse.chapter;
-                currentVerse = nextVerse.verse;
-                await loadCurrentVerse();
+            const nextContent = findNextFromPosition();
+            if (nextContent) {
+                currentChapter = nextContent.chapter;
+                currentVerse = nextContent.verse;
+                await loadCurrentContent();
                 showMessage(`Continuing from position: Proverbs ${currentChapter}:${currentVerse}`, 'success');
             } else {
-                showMessage("🎉 You've completed all verses from your current position!", 'success');
+                showMessage("You've completed all content from your current position!", 'success');
             }
         }
 
@@ -816,32 +1164,72 @@
             if (nextUnread) {
                 currentChapter = nextUnread.chapter;
                 currentVerse = nextUnread.verse;
-                await loadCurrentVerse();
-                showMessage(`Found next unread verse: Proverbs ${currentChapter}:${currentVerse}`, 'success');
+                await loadCurrentContent();
+                showMessage(`Found next unread: Proverbs ${currentChapter}:${currentVerse}`, 'success');
             } else {
-                showMessage("🎉 Congratulations! You've completed all of Proverbs!", 'success');
+                showMessage("Congratulations! You've completed all of Proverbs!", 'success');
             }
         }
 
         function markCompleted() {
             if (isLoading) return;
             
-            const verseKey = getVerseKey(currentChapter, currentVerse);
             const reflection = document.getElementById('reflectionText').value.trim();
             
-            if (!progress.completed.includes(verseKey)) {
-                progress.completed.push(verseKey);
-            }
-            
-            if (reflection) {
-                progress.reflections[verseKey] = reflection;
+            if (readingMode === 'section') {
+                const sectionKey = getCurrentSectionKey();
+                if (sectionKey && !progress.completedSections.includes(sectionKey)) {
+                    progress.completedSections.push(sectionKey);
+                }
+                
+                if (reflection) {
+                    progress.reflections[sectionKey] = reflection;
+                }
+                
+                showMessage(`Marked section as completed!${reflection ? ' Reflection saved.' : ''}`, 'success');
+            } else {
+                const verseKey = getVerseKey(currentChapter, currentVerse);
+                
+                if (!progress.completed.includes(verseKey)) {
+                    progress.completed.push(verseKey);
+                }
+                
+                if (reflection) {
+                    progress.reflections[verseKey] = reflection;
+                }
+                
+                showMessage(`Marked Proverbs ${currentChapter}:${currentVerse} as completed!${reflection ? ' Reflection saved.' : ''}`, 'success');
             }
             
             saveProgress();
-            loadCurrentVerse();
+            loadCurrentContent();
             updateStats();
+        }
+
+        function markUncompleted() {
+            if (isLoading) return;
             
-            showMessage(`✅ Marked Proverbs ${currentChapter}:${currentVerse} as completed!${reflection ? ' Reflection saved.' : ''}`, 'success');
+            if (readingMode === 'section') {
+                const sectionKey = getCurrentSectionKey();
+                if (sectionKey) {
+                    const index = progress.completedSections.indexOf(sectionKey);
+                    if (index > -1) {
+                        progress.completedSections.splice(index, 1);
+                    }
+                    showMessage(`Marked section as uncompleted.`, 'success');
+                }
+            } else {
+                const verseKey = getVerseKey(currentChapter, currentVerse);
+                const index = progress.completed.indexOf(verseKey);
+                if (index > -1) {
+                    progress.completed.splice(index, 1);
+                }
+                showMessage(`Marked Proverbs ${currentChapter}:${currentVerse} as uncompleted.`, 'success');
+            }
+            
+            saveProgress();
+            loadCurrentContent();
+            updateStats();
         }
 
         async function previousVerse() {
@@ -853,7 +1241,7 @@
                 currentChapter--;
                 currentVerse = PROVERBS_CHAPTERS[currentChapter];
             }
-            await loadCurrentVerse();
+            await loadCurrentContent();
         }
 
         async function nextVerse() {
@@ -866,20 +1254,21 @@
                 currentChapter++;
                 currentVerse = 1;
             }
-            await loadCurrentVerse();
+            await loadCurrentContent();
         }
 
         function updateStats() {
             const completed = progress.completed.length;
             const completedChapters = progress.completedChapters.length;
+            const completedSections = progress.completedSections.length;
             const total = getTotalVerses();
             const percent = Math.round((completed / total) * 100);
             
             document.getElementById('completedCount').textContent = completed;
             document.getElementById('completedChapters').textContent = completedChapters;
-            document.getElementById('totalCount').textContent = total;
+            document.getElementById('completedSections').textContent = completedSections;
             document.getElementById('progressPercent').textContent = `${percent}%`;
-            document.getElementById('progressFill').style.width = `${percent}%`;
+            document.getElementById('progressBar').style.width = `${percent}%`;
         }
 
         function saveProgress() {
@@ -896,8 +1285,23 @@
             }, 4000);
         }
 
+        function toggleCollapsible(sectionId) {
+            const content = document.getElementById(`${sectionId}-content`);
+            const chevron = document.getElementById(`${sectionId}-chevron`);
+            
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+                content.classList.add('open');
+                chevron.classList.add('open');
+            } else {
+                content.style.display = 'none';
+                content.classList.remove('open');
+                chevron.classList.remove('open');
+            }
+        }
+
         // Initialize the app
         init();
-    </script>
+</script>
 </body>
 </html>
