@@ -565,7 +565,14 @@
                             <label>Actions</label>
                             <button class="btn" onclick="goToSelectedVerse()">Go to Selection</button>
                         </div>
-                    </div>
+                    
+                        <div class="control-group">
+                            <h3>Reset</h3>
+                            <div class="button-group">
+                                <button class="btn primary" onclick="resetProgress()">Reset Progress</button>
+                            </div>
+                        </div>
+
                 </div>
             </div>
 
@@ -973,7 +980,7 @@
             sectionInfoEl.innerHTML = `
                 <strong>Section Type:</strong> ${sectionInfo.type}<br>
                 <strong>Verses:</strong> ${startRef}${endRef ? ` through ${endRef}` : ''}<br>
-                <strong>Literary Unit:</strong> This passage should be read as a complete unit of thought.
+                
             `;
             
             // Load existing reflection
@@ -1301,6 +1308,21 @@
         }
 
         // Initialize the app
+        
+        function resetProgress() {
+            if (confirm("Are you sure you want to reset your progress? This action cannot be undone.")) {
+                localStorage.removeItem('proverbsProgress');
+                progress = {"completed": [], "completedSections": [], "reflections": {}, "currentPosition": {"chapter": 1, "verse": 1}, "completedChapters": []};
+                saveProgress();
+                currentChapter = 1;
+                currentVerse = 1;
+                loadCurrentContent();
+                updateStats();
+                updateCurrentPositionDisplay();
+                showMessage("Progress has been reset.", "success");
+            }
+        }
+
         init();
 </script>
 </body>
