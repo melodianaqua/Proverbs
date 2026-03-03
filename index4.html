@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proverbs Reader | National Geographic Edition</title>
+    <style>
+        :root {
+            --natgeo-yellow: #FFCC00;
+            --natgeo-black: #1a1a1a;
+            --natgeo-gray: #333333;
+            --natgeo-white: #ffffff;
+            --bg-overlay: rgba(26, 26, 26, 0.85); /* Darkens the image for readability */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geograph', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: var(--natgeo-black);
+            line-height: 1.6;
+            /* Subtle Background Image Implementation */
+            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), 
+                        url('http://googleusercontent.com/image_generation_content/0');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: var(--natgeo-black);
+            color: var(--natgeo-white);
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 8px solid var(--natgeo-yellow);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 { font-family: 'Georgia', serif; font-size: 2.5rem; }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+        .main-card {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Reading Section */
+        .reading-section {
+            border-left: 6px solid var(--natgeo-yellow);
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-family: 'Georgia', serif;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .verse-content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            font-style: italic;
+            color: #222;
+        }
+
+        /* Buttons & Controls */
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn.primary { background: var(--natgeo-black); color: white; }
+        .btn.success { background: var(--natgeo-yellow); color: var(--natgeo-black); }
+        .btn.outline { background: #eee; color: var(--natgeo-black); }
+        .btn:disabled { opacity: 0.5; }
+
+        /* Reflections Restoration */
+        .reflection-box {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border: 1px solid #eee;
+            margin-bottom: 1.5rem;
+        }
+
+        .reflection-box label { font-weight: 800; font-size: 0.8rem; text-transform: uppercase; display: block; }
+        .reflection-box p { font-size: 0.85rem; color: #666; margin-bottom: 1rem; }
+        .reflection-textarea { width: 100%; min-height: 80px; padding: 0.8rem; border: 1px solid #ccc; font-family: inherit; }
+
+        /* Collapsible Sections (Settings/Stats) */
+        .collapsible-header {
+            width: 100%;
+            background: var(--natgeo-black);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .collapsible-content {
+            background: #fff;
+            padding: 1.5rem;
+            border: 1px solid #ddd;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .stat-card { border-top: 4px solid var(--natgeo-yellow); padding: 1rem; background: #f4f4f4; }
+        .stat-number { font-size: 1.5rem; font-weight: 900; }
+
+        .select-input { padding: 0.5rem; width: 100%; margin-bottom: 1rem; }
+
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--natgeo-yellow);
+            padding: 1rem;
+            font-weight: bold;
+            display: none;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="message" class="message"></div>
+
+    <div class="header">
+        <h1>Proverbs Reader</h1>
+    </div>
+
+    <div class="container">
+        <div class="main-card">
+            
+            <div class="quick-actions">
+                <button class="btn primary" onclick="loadNextFromPosition()">Continue Reading</button>
+                <button class="btn success" onclick="markCompleted()">Mark Complete</button>
+                <button class="btn outline" onclick="setCurrentPosition()">Bookmark</button>
+            </div>
+
+            <div class="reading-section">
+                <div id="badges"></div>
+                <div class="section-title" id="sectionTitle">Proverbs 1:1</div>
+                <div id="sectionInfo" style="font-size: 0.8rem; color: #666; margin-bottom: 0.5rem; display: none;"></div>
+                <div class="verse-content" id="verseContent">Initiating wisdom...</div>
+                <div id="copyright" style="font-size: 0.65rem; color: #aaa; margin-top: 1rem;"></div>
+            </div>
+
+            <div class="reflection-container">
+                <div class="reflection-box">
+                    <label>The Obvious Application</label>
+                    <p>What are some obvious ways this Proverb teaches me to live with the grain of God's created order?</p>
+                    <textarea class="reflection-textarea" id="reflectObvious"></textarea>
+                </div>
+                <div class="reflection-box">
+                    <label>The Ultimate Application</label>
+                    <p>What is the eternal consequences of living this way?</p>
+                    <textarea class="reflection-textarea" id="reflectUltimate"></textarea>
+                </div>
+                <div class="reflection-box">
+                    <label>The Cross-centred Application</label>
+                    <p>How has Jesus changed the situation by his work on the cross?</p>
+                    <textarea class="reflection-textarea" id="reflectCross"></textarea>
+                </div>
+            </div>
+
+            <button class="collapsible-header" onclick="toggleCollapsible('settings')">
+                Settings & Navigation <span>▼</span>
+            </button>
+            <div id="settings-content" class="collapsible-content" style="display: none;">
+                <div style="margin-bottom: 1.5rem;">
+                    <button class="btn outline" onclick="setReadingMode('verse')">Verses</button>
+                    <button class="btn outline" onclick="setReadingMode('section')">Literary Sections</button>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div>
+                        <label>Translation</label>
+                        <select class="select-input" onchange="setTranslation(this.value)">
+                            <option value="ESV">ESV</option>
+                            <option value="NASB">NASB</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Chapter</label>
+                        <select class="select-input" id="chapterSelect" onchange="updateVerseSelect()"></select>
+                    </div>
+                </div>
+                <button class="btn primary" onclick="goToSelectedVerse()">Go to Selection</button>
+                <button class="btn success" onclick="markChapterCompleted()">Mark Chapter Complete</button>
+                <button class="btn outline" style="color:red" onclick="resetProgress()">Reset All Progress</button>
+            </div>
+
+            <button class="collapsible-header" onclick="toggleCollapsible('stats')">
+                Progress & Statistics <span>▼</span>
+            </button>
+            <div id="stats-content" class="collapsible-content" style="display: none;">
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-number" id="completedCount">0</div><div>Verses</div></div>
+                    <div class="stat-card"><div class="stat-number" id="progressPercent">0%</div><div>Total</div></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const ESV_API_KEY = "d17d535bb86c9b3a55f904a1ddb28160ce2b2dda";
+        const ESV_API_URL = "https://api.esv.org/v3/passage/text/";
+        
+        const PROVERBS_CHAPTERS = {
+            1: 33, 2: 22, 3: 35, 4: 27, 5: 23, 6: 35, 7: 27, 8: 36, 9: 18, 10: 32,
+            11: 31, 12: 28, 13: 25, 14: 35, 15: 33, 16: 33, 17: 28, 18: 24, 19: 29, 20: 30,
+            21: 31, 22: 29, 23: 35, 24: 34, 25: 28, 26: 28, 27: 27, 28: 28, 29: 27, 30: 33, 31: 31
+        };
+
+        const PROVERBS_SECTIONS = {
+            "1:1-1:7": { title: "Title and Purpose", type: "introduction" },
+            "1:8-1:19": { title: "Lecture 1: Avoid Bad Company", type: "lecture" },
+            "1:20-1:33": { title: "Wisdom's First Call", type: "poem" }
+            // ... (Additional sections can be added here)
+        };
+
+        let currentChapter = 1;
+        let currentVerse = 1;
+        let currentTranslation = 'ESV';
+        let readingMode = 'verse';
+        let progress = JSON.parse(localStorage.getItem('proverbsProgress') || '{"completed": [], "completedSections": [], "reflections": {}, "currentPosition": {"chapter": 1, "verse": 1}, "completedChapters": []}');
+
+        function init() {
+            populateChapterSelect();
+            currentChapter = progress.currentPosition.chapter;
+            currentVerse = progress.currentPosition.verse;
+            loadCurrentContent();
+            updateStats();
+        }
+
+        async function loadCurrentContent() {
+            const verseKey = `${currentChapter}:${currentVerse}`;
+            document.getElementById('sectionTitle').textContent = `Proverbs ${verseKey}`;
+            
+            // Load 3-part reflection
+            const ref = progress.reflections[verseKey] || { obvious: '', ultimate: '', cross: '' };
+            document.getElementById('reflectObvious').value = ref.obvious || '';
+            document.getElementById('reflectUltimate').value = ref.ultimate || '';
+            document.getElementById('reflectCross').value = ref.cross || '';
+
+            const params = new URLSearchParams({
+                'q': `Proverbs ${verseKey}`,
+                'include-passage-references': 'false',
+                'include-headings': 'false'
+            });
+
+            try {
+                const response = await fetch(`${ESV_API_URL}?${params}`, {
+                    headers: { 'Authorization': `Token ${ESV_API_KEY}` }
+                });
+                const data = await response.json();
+                document.getElementById('verseContent').innerHTML = data.passages[0];
+                document.getElementById('copyright').textContent = "ESV® Bible Translation";
+            } catch (e) {
+                document.getElementById('verseContent').textContent = "Error fetching scripture.";
+            }
+        }
+
+        function markCompleted() {
+            const verseKey = `${currentChapter}:${currentVerse}`;
+            if (!progress.completed.includes(verseKey)) progress.completed.push(verseKey);
+            
+            progress.reflections[verseKey] = {
+                obvious: document.getElementById('reflectObvious').value,
+                ultimate: document.getElementById('reflectUltimate').value,
+                cross: document.getElementById('reflectCross').value
+            };
+            saveProgress();
+            updateStats();
+            showMessage("Marked Complete & Reflections Saved");
+        }
+
+        function markChapterCompleted() {
+            const verseCount = PROVERBS_CHAPTERS[currentChapter];
+            for (let v = 1; v <= verseCount; v++) {
+                const key = `${currentChapter}:${v}`;
+                if (!progress.completed.includes(key)) progress.completed.push(key);
+            }
+            saveProgress();
+            updateStats();
+            showMessage(`Chapter ${currentChapter} marked complete`);
+        }
+
+        function setCurrentPosition() {
+            progress.currentPosition = { chapter: currentChapter, verse: currentVerse };
+            saveProgress();
+            showMessage("Bookmark Set");
+        }
+
+        function toggleCollapsible(id) {
+            const content = document.getElementById(`${id}-content`);
+            content.style.display = content.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function populateChapterSelect() {
+            const sel = document.getElementById('chapterSelect');
+            for (let i = 1; i <= 31; i++) {
+                const opt = document.createElement('option');
+                opt.value = i; opt.textContent = `Chapter ${i}`;
+                sel.appendChild(opt);
+            }
+        }
+
+        function goToSelectedVerse() {
+            currentChapter = parseInt(document.getElementById('chapterSelect').value);
+            currentVerse = 1;
+            loadCurrentContent();
+        }
+
+        function setReadingMode(mode) { readingMode = mode; loadCurrentContent(); }
+        function setTranslation(tr) { currentTranslation = tr; loadCurrentContent(); }
+
+        function saveProgress() { localStorage.setItem('proverbsProgress', JSON.stringify(progress)); }
+
+        function updateStats() {
+            const count = progress.completed.length;
+            document.getElementById('completedCount').textContent = count;
+            document.getElementById('progressPercent').textContent = Math.round((count / 915) * 100) + "%";
+        }
+
+        function showMessage(text) {
+            const m = document.getElementById('message');
+            m.textContent = text; m.style.display = 'block';
+            setTimeout(() => m.style.display = 'none', 3000);
+        }
+
+        function resetProgress() {
+            if(confirm("Reset all data?")) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>
